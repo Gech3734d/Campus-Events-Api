@@ -3,10 +3,16 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as argon2 from 'argon2';
-import { UsersService, User } from '../users/users.service.js';
+
+import {
+  UsersService,
+  User,
+} from '../users/users.service.js';
+
 import { RegisterDto } from './dto/register.dto.js';
 import { LoginDto } from './dto/login.dto.js';
 
@@ -24,7 +30,9 @@ export class AuthService {
     );
 
     if (existingUser) {
-      throw new ConflictException('Email already registered');
+      throw new ConflictException(
+        'Email already registered',
+      );
     }
 
     const passwordHash = await argon2.hash(dto.password);
@@ -37,7 +45,7 @@ export class AuthService {
     return {
       id: user.id,
       email: user.email,
-      roles: user.roles,
+      role: user.role,
     };
   }
 
@@ -45,11 +53,16 @@ export class AuthService {
     const user = await this.users.findByEmail(dto.email);
 
     const passwordMatches = user
-      ? await argon2.verify(user.passwordHash, dto.password)
+      ? await argon2.verify(
+          user.passwordHash,
+          dto.password,
+        )
       : false;
 
     if (!user || !passwordMatches) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException(
+        'Invalid credentials',
+      );
     }
 
     return this.issueTokens(user);
@@ -59,72 +72,89 @@ export class AuthService {
     const accessPayload = {
       sub: user.id,
       email: user.email,
-      roles: user.roles,
+      role: user.role,
     };
 
-    const [accessToken, refreshToken] = await Promise.all([
-      this.jwt.signAsync(accessPayload, {
-        secret: this.config.getOrThrow(
-          'JWT_ACCESS_SECRET',
-        ),
-        expiresIn: '15m',
-        algorithm: 'HS256',
-      }),
-      this.jwt.signAsync(
-        { sub: user.id },
-        {
-          secret: this.config.getOrThrow(
-            'JWT_REFRESH_SECRET',
+    const [accessToken, refreshToken] =
+      await Promise.all([
+        this.jwt.signAsync(accessPayload, {
+          secret: this.config.getOrThrow<string>(
+            'JWT_ACCESS_SECRET',
           ),
-          expiresIn: '7d',
+          expiresIn: '15m',
           algorithm: 'HS256',
-        },
-      ),
-    ]);
+        }),
+
+        this.jwt.signAsync(
+          { sub: user.id },
+          {
+            secret: this.config.getOrThrow<string>(
+              'JWT_REFRESH_SECRET',
+            ),
+            expiresIn: '7d',
+            algorithm: 'HS256',
+          },
+        ),
+      ]);
 
     await this.users.setRefreshHash(
       user.id,
       await argon2.hash(refreshToken),
     );
 
-    return { accessToken, refreshToken };
+    return {
+      accessToken,
+      refreshToken,
+    };
   }
 
   async refresh(presentedToken: string) {
-  try {
-    const payload = await this.jwt.verifyAsync<{ sub: number }>(
-      presentedToken,
-      {
-        secret: this.config.getOrThrow<string>(
-          'JWT_REFRESH_SECRET',
-        ),
-        algorithms: ['HS256'],
-      },
-    );
+    try {
+      const payload =
+        await this.jwt.verifyAsync<{ sub: string }>(
+          presentedToken,
+          {
+            secret: this.config.getOrThrow<string>(
+              'JWT_REFRESH_SECRET',
+            ),
+            algorithms: ['HS256'],
+          },
+        );
 
-    const user = await this.users.findById(payload.sub);
+      const user = await this.users.findById(
+        payload.sub,
+      );
 
-    if (!user || !user.refreshHash) {
-      throw new UnauthorizedException('Invalid refresh token');
+      if (!user || !user.refreshHash) {
+        throw new UnauthorizedException(
+          'Invalid refresh token',
+        );
+      }
+
+      const matches = await argon2.verify(
+        user.refreshHash,
+        presentedToken,
+      );
+
+      if (!matches) {
+        throw new UnauthorizedException(
+          'Invalid refresh token',
+        );
+      }
+
+      return this.issueTokens(user);
+    } catch {
+      throw new UnauthorizedException(
+        'Invalid refresh token',
+      );
     }
-
-    const matches = await argon2.verify(
-      user.refreshHash,
-      presentedToken,
-    );
-
-    if (!matches) {
-      throw new UnauthorizedException('Invalid refresh token');
-    }
-
-    return this.issueTokens(user);
-  } catch {
-    throw new UnauthorizedException('Invalid refresh token');
   }
-}
 
-async logout(userId: number) {
-  await this.users.setRefreshHash(userId, null);
-  return { message: 'Logged out' };
-}
+  async logout(userId: string) {
+    await this.users.setRefreshHash(userId, null);
+
+    return {
+      message: 'Logged out',
+    };
+  }
 }

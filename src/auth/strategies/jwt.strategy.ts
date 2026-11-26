@@ -6,10 +6,12 @@ import {
   Strategy,
 } from 'passport-jwt';
 
+import { Role } from '../../common/enums/role.enum.js';
+
 type JwtPayload = {
-  sub: number;
+  sub: string;
   email: string;
-  roles: string[];
+  role: Role;
 };
 
 @Injectable()
@@ -22,7 +24,7 @@ export class JwtStrategy extends PassportStrategy(
       jwtFromRequest:
         ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: config.getOrThrow(
+      secretOrKey: config.getOrThrow<string>(
         'JWT_ACCESS_SECRET',
       ),
       algorithms: ['HS256'],
@@ -31,9 +33,9 @@ export class JwtStrategy extends PassportStrategy(
 
   async validate(payload: JwtPayload) {
     return {
-      id: payload.sub,
+      userId: payload.sub,
       email: payload.email,
-      roles: payload.roles,
+      role: payload.role,
     };
   }
 }

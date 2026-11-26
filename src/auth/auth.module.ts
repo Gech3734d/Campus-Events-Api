@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { JwtAuthGuard } from './jwt-auth.guard.js';
+import { JwtAuthGuard } from './guards/jwt-auth.guard.js';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { UsersModule } from '../users/users.module.js';

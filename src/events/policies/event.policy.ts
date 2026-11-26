@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+
 import { Role } from '../../common/enums/role.enum.js';
 import { AuthUser } from '../../common/interfaces/auth-user.interface.js';
 
@@ -11,16 +12,27 @@ export interface EventResource {
 
 @Injectable()
 export class EventPolicy {
-  canRead(user: AuthUser | undefined, event: EventResource): boolean {
+  canRead(
+    user: AuthUser | undefined,
+    event: EventResource,
+  ): boolean {
     if (event.isPublished) {
       return true;
     }
 
-    return !!user &&
-      (user.role === Role.ADMIN || event.createdBy === user.userId);
+    return !!user && (
+      user.role === Role.ADMIN ||
+      (
+        user.role === Role.ORGANIZER &&
+        event.createdBy === user.userId
+      )
+    );
   }
 
-  canUpdate(user: AuthUser, event: EventResource): boolean {
+  canUpdate(
+    user: AuthUser,
+    event: EventResource,
+  ): boolean {
     return (
       user.role === Role.ADMIN ||
       (
@@ -30,17 +42,24 @@ export class EventPolicy {
     );
   }
 
-  canDelete(user: AuthUser, event: EventResource): boolean {
-    return (
-      user.role === Role.ADMIN ||
-      (
-        user.role === Role.ORGANIZER &&
-        event.createdBy === user.userId
-      )
-    );
+  canDelete(
+    user: AuthUser,
+    event: EventResource,
+  ): boolean {
+    return this.canUpdate(user, event);
   }
 
-  canPublish(user: AuthUser, event: EventResource): boolean {
+  canPublish(
+    user: AuthUser,
+    event: EventResource,
+  ): boolean {
+    return this.canUpdate(user, event);
+  }
+
+  canManageSessions(
+    user: AuthUser,
+    event: EventResource,
+  ): boolean {
     return this.canUpdate(user, event);
   }
 }

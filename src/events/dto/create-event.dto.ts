@@ -3,7 +3,6 @@ import {
   IsString,
   IsNotEmpty,
   IsDateString,
-  IsBoolean,
 } from 'class-validator';
 
 export class CreateEventDto {
@@ -25,7 +24,4 @@ export class CreateEventDto {
   @IsString()
   @IsNotEmpty()
   category: string;
-
-  @IsBoolean()
-  isPublished: boolean;
 }

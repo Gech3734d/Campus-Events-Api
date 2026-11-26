@@ -1,3 +1,224 @@
+
+@adminToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuZXQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3OTU2NTQxMDMsImV4cCI6MTc5NTY1NTAwM30.C_fPXqaY5zrEePODxBwjdBesCAdEIMb_mzz6mFFs86A",
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuZXQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3OTU2NTQxMDMsImV4cCI6MTc5NTY1NTAwM30.C_fPXqaY5zrEePODxBwjdBesCAdEIMb_mzz6mFFs86A",
+@organizer10Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuZXQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3OTU2NTQxMDMsImV4cCI6MTc5NTY1NTAwM30.C_fPXqaY5zrEePODxBwjdBesCAdEIMb_mzz6mFFs86A",
+                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuZXQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3OTU2NTQxMDMsImV4cCI6MTc5NTY1NTAwM30.C_fPXqaY5zrEePODxBwjdBesCAdEIMb_mzz6mFFs86A",
+
+                 
+@organizer20Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuZXQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3OTU2NTQxMDMsImV4cCI6MTc5NTY1NTAwM30.C_fPXqaY5zrEePODxBwjdBesCAdEIMb_mzz6mFFs86A",
+                     "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTIwIiwiaWF0IjoxNzk1NjU1MzQ0LCJleHAiOjE3OTYyNjAxNDR9.O0c9idduOiPyM3SKwYJ5qN9ELSn-zHDpSjf1a42KSTk"
+ 
+@studentToken =   "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTMwIiwiZW1haWwiOiJzdHVkZW50QGV4YW1wbGUuZXQiLCJyb2xlIjoic3R1ZGVudCIsImlhdCI6MTc5NTY1NTg3NSwiZXhwIjoxNzk1NjU2Nzc1fQ.rgT7__Ds6lnpmMfmMpQS8F24K0rc3CV0AC5U-1VmS9g"
+
+                  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTMwIiwiaWF0IjoxNzk1NjU1ODc1LCJleHAiOjE3OTYyNjA2NzV9.N2vds2TVeef2THHwa_6zpJJtIR9hy36HaSN75t1Rm24"
+
+@event101 = evt-101
+@event102 = evt-102
+
+@session101 = PASTE_SESSION_ID_UNDER_EVT101
+@session102 = PASTE_SESSION_ID_UNDER_EVT102
+
+@host = http://localhost:3000/api
+@accessToken = PASTE_ACCESS_TOKEN_HERE
+@organizerToken = PASTE_ORGANIZER_JWT_HERE
+@studentToken = PASTE_STUDENT_JWT_HERE
+@eventId = PASTE_EVENT_ID_HERE
+### ADMIN Login
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.et",
+  "password": "Password123!"
+}
+
+### ORGANIZER 10 Login
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "organizer10@example.et",
+  "password": "Password123!"
+}
+
+### ORGANIZER 20 Login
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "organizer20@example.et",
+  "password": "Password123!"
+}
+
+### STUDENT Login
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "student@example.et",
+  "password": "Password123!"
+}
+
+### TEST API
+GET {{baseUrl}}/events
+
+### REGISTER: New customer
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "newcustomer@example.et",
+  "password": "Password123!"
+}
+
+### LOGIN: Wrong password
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "almaz@example.et",
+  "password": "WrongPassword123!"
+}
+
+### GET: Current user
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{accessToken}}
+@adminToken = PASTE_ADMIN_ACCESS_TOKEN
+@organizer10Token = PASTE_USER10_ACCESS_TOKEN
+@organizer20Token = PASTE_USER20_ACCESS_TOKEN
+@studentToken = PASTE_STUDENT_ACCESS_TOKEN
+
+@event101 = evt-101
+@event102 = evt-102
+
+# Replace these with real session IDs from your EventsService seed data.
+@session101 = PASTE_SESSION_ID_UNDER_EVT101
+@session102 = PASTE_SESSION_ID_UNDER_EVT102
+
+
+### TEST 1: ADMIN updates evt-102
+### Expected: 200 OK
+PATCH {{baseUrl}}/events/{{event102}}
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "title": "Updated Student Art Exhibition"
+}
+
+
+### TEST 2: ORGANIZER user-10 updates own evt-101
+### Expected: 200 OK
+PATCH {{baseUrl}}/events/{{event101}}
+Content-Type: application/json
+Authorization: Bearer {{organizer10Token}}
+
+{
+  "title": "Updated Robotics Showcase"
+}
+
+
+### TEST 3: ORGANIZER user-10 updates evt-102 owned by user-20
+### Expected: 404 Not Found
+PATCH {{baseUrl}}/events/{{event102}}
+Content-Type: application/json
+Authorization: Bearer {{organizer10Token}}
+
+{
+  "title": "Unauthorized Update"
+}
+
+
+### TEST 4: STUDENT tries to update evt-101
+### Expected: 403 Forbidden
+PATCH {{baseUrl}}/events/{{event101}}
+Content-Type: application/json
+Authorization: Bearer {{studentToken}}
+
+{
+  "title": "Student Unauthorized Update"
+}
+
+
+### TEST 5: ORGANIZER user-10 updates a session under own evt-101
+### Expected: 200 OK
+PATCH {{baseUrl}}/events/{{event101}}/sessions/{{session101}}
+Content-Type: application/json
+Authorization: Bearer {{organizer10Token}}
+
+{
+  "title": "Updated Robotics Session"
+}
+
+
+### TEST 6: ORGANIZER user-10 updates a session under evt-102
+### Expected: 404 Not Found
+PATCH {{baseUrl}}/events/{{event102}}/sessions/{{session102}}
+Content-Type: application/json
+Authorization: Bearer {{organizer10Token}}
+
+{
+  "title": "Unauthorized Session Update"
+}
+
+
+### TEST 7: STUDENT tries to update a session
+### Expected: 403 Forbidden
+PATCH {{baseUrl}}/events/{{event101}}/sessions/{{session101}}
+Content-Type: application/json
+Authorization: Bearer {{studentToken}}
+
+{
+  "title": "Student Unauthorized Session Update"
+}
+
+
+### TEST 8: Update an event that does not exist
+### Expected: 404 Not Found
+PATCH {{baseUrl}}/events/non-existent-event
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "title": "Missing Event"
+}
+
+
+### TEST 9: Session belongs to another event than the URL event
+### Expected: 404 Not Found
+# session101 belongs to evt-101, but URL says evt-102.
+PATCH {{baseUrl}}/events/{{event102}}/sessions/{{session101}}
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "title": "Wrong Parent Event Test"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Test API
+GET http://localhost:3000/api/events
+
+
+
 ### Register a new customer
 POST http://localhost:3000/api/auth/register
 Content-Type: application/json
@@ -42,6 +263,26 @@ Content-Type: application/json
   "email": "new@example.et",
   "password": "Password123!",
   "roles": ["admin"]
+}
+
+### Login existing user
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "almaz@example.et",
+  "password": "Password123!"
+}
+
+@baseUrl = http://localhost:3000/api
+
+### Login with registered customer
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "almaz@example.et",
+  "password": "Password123!"
 }
 
 ### Login with the registered user
@@ -146,3 +387,4 @@ Authorization: Bearer {{studentToken}}
 ### 8. Admin: Get all users
 GET {{baseUrl}}/users
 Authorization: Bearer {{adminToken}}
+

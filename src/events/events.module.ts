@@ -1,3 +1,4 @@
+
 import { Module } from '@nestjs/common';
 
 import { EventsController } from './events.controller.js';
@@ -9,16 +10,15 @@ import { EventPolicyGuard } from '../common/guards/event-policy.guard.js';
 
 @Module({
   controllers: [EventsController],
-
   providers: [
     EventsService,
     EventPolicy,
     RolesGuard,
     EventPolicyGuard,
   ],
-
   exports: [
     EventsService,
+    EventPolicy,
   ],
 })
 export class EventsModule {}

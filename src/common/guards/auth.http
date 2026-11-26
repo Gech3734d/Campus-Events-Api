@@ -1,0 +1,148 @@
+### Register a new customer
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "almaz@example.et",
+  "password": "Password123!"
+}
+
+### Try the same email again — expect 409
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "almaz@example.et",
+  "password": "Password123!"
+}
+
+### Invalid email — expect 400
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "not-an-email",
+  "password": "Password123!"
+}
+
+### Short password — expect 400
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "new@example.et",
+  "password": "123"
+}
+
+### Extra role field — expect 400
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "new@example.et",
+  "password": "Password123!",
+  "roles": ["admin"]
+}
+
+### Login with the registered user
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "almaz@example.et",
+  "password": "Password123!"
+}
+
+### Wrong password — expect same 401 message
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "almaz@example.et",
+  "password": "WrongPassword123!"
+}
+
+### Unknown email — expect same 401 message
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "nobody@example.et",
+  "password": "Password123!"
+}
+@host = http://localhost:3000/api
+@accessToken = PASTE_ACCESS_TOKEN_HERE
+
+### No token — expect 401
+GET {{host}}/auth/me
+
+### Valid token — expect 200 and the user object
+GET {{host}}/auth/me
+Authorization: Bearer {{accessToken}}
+
+### Tampered token — expect 401
+GET {{host}}/auth/me
+Authorization: Bearer {{accessToken}}x
+### Refresh using the refresh token returned by login
+POST http://localhost:3000/api/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "PASTE_REFRESH_TOKEN_HERE"
+}
+
+
+
+@baseUrl = http://localhost:3000/api
+@organizerToken = PASTE_ORGANIZER_JWT_HERE
+@studentToken = PASTE_STUDENT_JWT_HERE
+@adminToken = PASTE_ADMIN_JWT_HERE
+@eventId = PASTE_EVENT_ID_HERE
+
+### 1. Public: Get published events
+GET {{baseUrl}}/events
+
+### 2. Organizer: Create event
+POST {{baseUrl}}/events
+Content-Type: application/json
+Authorization: Bearer {{organizerToken}}
+
+{
+  "title": "Campus Technology Day",
+  "description": "A technology event for students"
+}
+
+### 3. Organizer: Get own events
+GET {{baseUrl}}/events/my-events
+Authorization: Bearer {{organizerToken}}
+
+### 4. Organizer: Update own event
+PATCH {{baseUrl}}/events/{{eventId}}
+Content-Type: application/json
+Authorization: Bearer {{organizerToken}}
+
+{
+  "title": "Updated Campus Technology Day"
+}
+
+### 5. Organizer: Publish own event
+PATCH {{baseUrl}}/events/{{eventId}}/publish
+Authorization: Bearer {{organizerToken}}
+
+### 6. Organizer: Delete own event
+DELETE {{baseUrl}}/events/{{eventId}}
+Authorization: Bearer {{organizerToken}}
+
+### 7. Student: Try to create event (should fail)
+POST {{baseUrl}}/events
+Content-Type: application/json
+Authorization: Bearer {{studentToken}}
+
+{
+  "title": "Unauthorized Event",
+  "description": "Student should not create this"
+}
+
+### 8. Admin: Get all users
+GET {{baseUrl}}/users
+Authorization: Bearer {{adminToken}}
