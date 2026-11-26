@@ -26,18 +26,23 @@ async function bootstrap() {
 
   // Swagger Configuration
   const config = new DocumentBuilder()
-    .setTitle('Campus Events API')
-    .setDescription('Demonstrate events and their sessions')
-    .setVersion('1.0')
-    .addBearerAuth()
-    .build();
+  .setTitle('Campus Events API')
+  .setDescription('Demonstrate events and their sessions')
+  .setVersion('1.0')
+  .addBearerAuth(
+    {
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+      in: 'header',
+    },
+    'bearer',
+  )
+  .build();
 
-  // Create Swagger Document
-  const document = SwaggerModule.createDocument(app, config);
+const document = SwaggerModule.createDocument(app, config);
 
-  // Setup Swagger UI
-  SwaggerModule.setup('api/docs', app, document);
-
+SwaggerModule.setup('api/docs', app, document);
   // Start Server
   await app.listen(3000);
 

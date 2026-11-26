@@ -1,390 +1,226 @@
+@baseUrl = http://localhost:3000/api
 
-@adminToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuZXQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3OTU2NTQxMDMsImV4cCI6MTc5NTY1NTAwM30.C_fPXqaY5zrEePODxBwjdBesCAdEIMb_mzz6mFFs86A",
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuZXQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3OTU2NTQxMDMsImV4cCI6MTc5NTY1NTAwM30.C_fPXqaY5zrEePODxBwjdBesCAdEIMb_mzz6mFFs86A",
-@organizer10Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuZXQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3OTU2NTQxMDMsImV4cCI6MTc5NTY1NTAwM30.C_fPXqaY5zrEePODxBwjdBesCAdEIMb_mzz6mFFs86A",
-                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuZXQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3OTU2NTQxMDMsImV4cCI6MTc5NTY1NTAwM30.C_fPXqaY5zrEePODxBwjdBesCAdEIMb_mzz6mFFs86A",
-
-                 
-@organizer20Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuZXQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3OTU2NTQxMDMsImV4cCI6MTc5NTY1NTAwM30.C_fPXqaY5zrEePODxBwjdBesCAdEIMb_mzz6mFFs86A",
-                     "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTIwIiwiaWF0IjoxNzk1NjU1MzQ0LCJleHAiOjE3OTYyNjAxNDR9.O0c9idduOiPyM3SKwYJ5qN9ELSn-zHDpSjf1a42KSTk"
- 
-@studentToken =   "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTMwIiwiZW1haWwiOiJzdHVkZW50QGV4YW1wbGUuZXQiLCJyb2xlIjoic3R1ZGVudCIsImlhdCI6MTc5NTY1NTg3NSwiZXhwIjoxNzk1NjU2Nzc1fQ.rgT7__Ds6lnpmMfmMpQS8F24K0rc3CV0AC5U-1VmS9g"
-
-                  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTMwIiwiaWF0IjoxNzk1NjU1ODc1LCJleHAiOjE3OTYyNjA2NzV9.N2vds2TVeef2THHwa_6zpJJtIR9hy36HaSN75t1Rm24"
-
+### EVENT AND SESSION IDS
 @event101 = evt-101
 @event102 = evt-102
+@missingEvent = evt-999
 
-@session101 = PASTE_SESSION_ID_UNDER_EVT101
-@session102 = PASTE_SESSION_ID_UNDER_EVT102
+@session101 = ses-201
+@session102 = ses-203
+@missingSession = session-999
 
-@host = http://localhost:3000/api
-@accessToken = PASTE_ACCESS_TOKEN_HERE
-@organizerToken = PASTE_ORGANIZER_JWT_HERE
-@studentToken = PASTE_STUDENT_JWT_HERE
-@eventId = PASTE_EVENT_ID_HERE
-### ADMIN Login
-POST http://localhost:3000/api/auth/login
+### ==========================================
+### STEP 1: LOGIN AS ADMIN
+### ==========================================
+
+
+# @name adminLogin
+POST {{baseUrl}}/auth/login
 Content-Type: application/json
+Accept: application/json
 
 {
   "email": "admin@example.et",
   "password": "Password123!"
 }
 
-### ORGANIZER 10 Login
-POST http://localhost:3000/api/auth/login
+### ==========================================
+### STEP 2: LOGIN AS ORGANIZER 10
+### ==========================================
+
+# @name organizer10Login
+POST {{baseUrl}}/auth/login
 Content-Type: application/json
+Accept: application/json
 
 {
   "email": "organizer10@example.et",
   "password": "Password123!"
 }
 
-### ORGANIZER 20 Login
-POST http://localhost:3000/api/auth/login
+### ==========================================
+### STEP 3: LOGIN AS ORGANIZER 20
+### ==========================================
+
+# @name organizer20Login
+POST {{baseUrl}}/auth/login
 Content-Type: application/json
+Accept: application/json
 
 {
   "email": "organizer20@example.et",
   "password": "Password123!"
 }
 
-### STUDENT Login
-POST http://localhost:3000/api/auth/login
+### ==========================================
+### STEP 4: LOGIN AS STUDENT
+### ==========================================
+
+# @name studentLogin
+POST {{baseUrl}}/auth/login
 Content-Type: application/json
+Accept: application/json
 
 {
   "email": "student@example.et",
   "password": "Password123!"
 }
 
-### TEST API
-GET {{baseUrl}}/events
 
-### REGISTER: New customer
-POST {{baseUrl}}/auth/register
-Content-Type: application/json
-
-{
-  "email": "newcustomer@example.et",
-  "password": "Password123!"
-}
-
-### LOGIN: Wrong password
-POST {{baseUrl}}/auth/login
-Content-Type: application/json
-
-{
-  "email": "almaz@example.et",
-  "password": "WrongPassword123!"
-}
-
-### GET: Current user
-GET {{baseUrl}}/auth/me
-Authorization: Bearer {{accessToken}}
-@adminToken = PASTE_ADMIN_ACCESS_TOKEN
-@organizer10Token = PASTE_USER10_ACCESS_TOKEN
-@organizer20Token = PASTE_USER20_ACCESS_TOKEN
-@studentToken = PASTE_STUDENT_ACCESS_TOKEN
-
-@event101 = evt-101
-@event102 = evt-102
-
-# Replace these with real session IDs from your EventsService seed data.
-@session101 = PASTE_SESSION_ID_UNDER_EVT101
-@session102 = PASTE_SESSION_ID_UNDER_EVT102
+### IMPORTANT:
 
 
-### TEST 1: ADMIN updates evt-102
-### Expected: 200 OK
+@adminToken =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyLTEiLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuZXQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3OTU2ODk1OTYsImV4cCI6MTc5NTY5MDQ5Nn0.dMlTZH0KaS2nKXSvBKYTzdp2HPvIbDOyxtnD2m1OQ6s
+
+
+@organizer10Token = 
+
+
+@organizer20Token = 
+
+
+@studentToken =
+
+
+### ==========================================
+### TASK 1: EVENT AUTHORIZATION
+### ==========================================
+
+### TEST 1: ADMIN updates another organizer's event
+### EXPECTED: 200 OK
+
 PATCH {{baseUrl}}/events/{{event102}}
-Content-Type: application/json
 Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+Accept: application/json
 
 {
-  "title": "Updated Student Art Exhibition"
+  "title": "Admin Updated Student Art Exhibition"
 }
 
+### TEST 2: ORGANIZER 10 updates OWN event
+### EXPECTED: 200 OK
 
-### TEST 2: ORGANIZER user-10 updates own evt-101
-### Expected: 200 OK
 PATCH {{baseUrl}}/events/{{event101}}
-Content-Type: application/json
 Authorization: Bearer {{organizer10Token}}
+Content-Type: application/json
+Accept: application/json
 
 {
   "title": "Updated Robotics Showcase"
 }
 
+### TEST 3: ORGANIZER 10 updates ORGANIZER 20 event
+### EXPECTED: 404 Not Found
 
-### TEST 3: ORGANIZER user-10 updates evt-102 owned by user-20
-### Expected: 404 Not Found
 PATCH {{baseUrl}}/events/{{event102}}
-Content-Type: application/json
 Authorization: Bearer {{organizer10Token}}
+Content-Type: application/json
+Accept: application/json
 
 {
-  "title": "Unauthorized Update"
+  "title": "Unauthorized Event Update"
 }
 
+### TEST 4: STUDENT tries to update an event
+### EXPECTED: 403 Forbidden
 
-### TEST 4: STUDENT tries to update evt-101
-### Expected: 403 Forbidden
 PATCH {{baseUrl}}/events/{{event101}}
-Content-Type: application/json
 Authorization: Bearer {{studentToken}}
+Content-Type: application/json
+Accept: application/json
 
 {
   "title": "Student Unauthorized Update"
 }
 
+### TEST 5: Update an event that does not exist
+### EXPECTED: 404 Not Found
 
-### TEST 5: ORGANIZER user-10 updates a session under own evt-101
-### Expected: 200 OK
-PATCH {{baseUrl}}/events/{{event101}}/sessions/{{session101}}
-Content-Type: application/json
-Authorization: Bearer {{organizer10Token}}
-
-{
-  "title": "Updated Robotics Session"
-}
-
-
-### TEST 6: ORGANIZER user-10 updates a session under evt-102
-### Expected: 404 Not Found
-PATCH {{baseUrl}}/events/{{event102}}/sessions/{{session102}}
-Content-Type: application/json
-Authorization: Bearer {{organizer10Token}}
-
-{
-  "title": "Unauthorized Session Update"
-}
-
-
-### TEST 7: STUDENT tries to update a session
-### Expected: 403 Forbidden
-PATCH {{baseUrl}}/events/{{event101}}/sessions/{{session101}}
-Content-Type: application/json
-Authorization: Bearer {{studentToken}}
-
-{
-  "title": "Student Unauthorized Session Update"
-}
-
-
-### TEST 8: Update an event that does not exist
-### Expected: 404 Not Found
-PATCH {{baseUrl}}/events/non-existent-event
-Content-Type: application/json
+PATCH {{baseUrl}}/events/{{missingEvent}}
 Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+Accept: application/json
 
 {
   "title": "Missing Event"
 }
 
 
-### TEST 9: Session belongs to another event than the URL event
-### Expected: 404 Not Found
-# session101 belongs to evt-101, but URL says evt-102.
-PATCH {{baseUrl}}/events/{{event102}}/sessions/{{session101}}
+### ==========================================
+### TASK 2: SESSION AUTHORIZATION
+### ==========================================
+
+### TEST 6: ORGANIZER 10 updates session under OWN event
+### EXPECTED: 200 OK
+
+PATCH {{baseUrl}}/events/{{event101}}/sessions/{{session101}}
+Authorization: Bearer {{organizer10Token}}
 Content-Type: application/json
-Authorization: Bearer {{adminToken}}
+Accept: application/json
 
 {
-  "title": "Wrong Parent Event Test"
+  "title": "Updated Robotics Session"
 }
 
+### TEST 7: ORGANIZER 10 updates session under OTHER event
+### EXPECTED: 404 Not Found
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### Test API
-GET http://localhost:3000/api/events
-
-
-
-### Register a new customer
-POST http://localhost:3000/api/auth/register
+PATCH {{baseUrl}}/events/{{event102}}/sessions/{{session102}}
+Authorization: Bearer {{organizer10Token}}
 Content-Type: application/json
+Accept: application/json
 
 {
-  "email": "almaz@example.et",
-  "password": "Password123!"
+  "title": "Unauthorized Session Update"
 }
 
-### Try the same email again — expect 409
-POST http://localhost:3000/api/auth/register
-Content-Type: application/json
+### TEST 8: STUDENT tries to update a session
+### EXPECTED: 403 Forbidden
 
-{
-  "email": "almaz@example.et",
-  "password": "Password123!"
-}
-
-### Invalid email — expect 400
-POST http://localhost:3000/api/auth/register
-Content-Type: application/json
-
-{
-  "email": "not-an-email",
-  "password": "Password123!"
-}
-
-### Short password — expect 400
-POST http://localhost:3000/api/auth/register
-Content-Type: application/json
-
-{
-  "email": "new@example.et",
-  "password": "123"
-}
-
-### Extra role field — expect 400
-POST http://localhost:3000/api/auth/register
-Content-Type: application/json
-
-{
-  "email": "new@example.et",
-  "password": "Password123!",
-  "roles": ["admin"]
-}
-
-### Login existing user
-POST http://localhost:3000/api/auth/login
-Content-Type: application/json
-
-{
-  "email": "almaz@example.et",
-  "password": "Password123!"
-}
-
-@baseUrl = http://localhost:3000/api
-
-### Login with registered customer
-POST {{baseUrl}}/auth/login
-Content-Type: application/json
-
-{
-  "email": "almaz@example.et",
-  "password": "Password123!"
-}
-
-### Login with the registered user
-POST http://localhost:3000/api/auth/login
-Content-Type: application/json
-
-{
-  "email": "almaz@example.et",
-  "password": "Password123!"
-}
-
-### Wrong password — expect same 401 message
-POST http://localhost:3000/api/auth/login
-Content-Type: application/json
-
-{
-  "email": "almaz@example.et",
-  "password": "WrongPassword123!"
-}
-
-### Unknown email — expect same 401 message
-POST http://localhost:3000/api/auth/login
-Content-Type: application/json
-
-{
-  "email": "nobody@example.et",
-  "password": "Password123!"
-}
-@host = http://localhost:3000/api
-@accessToken = PASTE_ACCESS_TOKEN_HERE
-
-### No token — expect 401
-GET {{host}}/auth/me
-
-### Valid token — expect 200 and the user object
-GET {{host}}/auth/me
-Authorization: Bearer {{accessToken}}
-
-### Tampered token — expect 401
-GET {{host}}/auth/me
-Authorization: Bearer {{accessToken}}x
-### Refresh using the refresh token returned by login
-POST http://localhost:3000/api/auth/refresh
-Content-Type: application/json
-
-{
-  "refreshToken": "PASTE_REFRESH_TOKEN_HERE"
-}
-
-
-
-@baseUrl = http://localhost:3000/api
-@organizerToken = PASTE_ORGANIZER_JWT_HERE
-@studentToken = PASTE_STUDENT_JWT_HERE
-@adminToken = PASTE_ADMIN_JWT_HERE
-@eventId = PASTE_EVENT_ID_HERE
-
-### 1. Public: Get published events
-GET {{baseUrl}}/events
-
-### 2. Organizer: Create event
-POST {{baseUrl}}/events
-Content-Type: application/json
-Authorization: Bearer {{organizerToken}}
-
-{
-  "title": "Campus Technology Day",
-  "description": "A technology event for students"
-}
-
-### 3. Organizer: Get own events
-GET {{baseUrl}}/events/my-events
-Authorization: Bearer {{organizerToken}}
-
-### 4. Organizer: Update own event
-PATCH {{baseUrl}}/events/{{eventId}}
-Content-Type: application/json
-Authorization: Bearer {{organizerToken}}
-
-{
-  "title": "Updated Campus Technology Day"
-}
-
-### 5. Organizer: Publish own event
-PATCH {{baseUrl}}/events/{{eventId}}/publish
-Authorization: Bearer {{organizerToken}}
-
-### 6. Organizer: Delete own event
-DELETE {{baseUrl}}/events/{{eventId}}
-Authorization: Bearer {{organizerToken}}
-
-### 7. Student: Try to create event (should fail)
-POST {{baseUrl}}/events
-Content-Type: application/json
+PATCH {{baseUrl}}/events/{{event101}}/sessions/{{session101}}
 Authorization: Bearer {{studentToken}}
+Content-Type: application/json
+Accept: application/json
 
 {
-  "title": "Unauthorized Event",
-  "description": "Student should not create this"
+  "title": "Student Unauthorized Session"
 }
 
-### 8. Admin: Get all users
-GET {{baseUrl}}/users
-Authorization: Bearer {{adminToken}}
+### TEST 9: Session belongs to a different parent event
+### EXPECTED: 404 Not Found
 
+PATCH {{baseUrl}}/events/{{event101}}/sessions/{{session102}}
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "title": "Wrong Parent Session"
+}
+
+### TEST 10: Session does not exist
+### EXPECTED: 404 Not Found
+
+PATCH {{baseUrl}}/events/{{event101}}/sessions/{{missingSession}}
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "title": "Missing Session"
+}
+
+
+### ==========================================
+### EXTRA TEST: INVALID TOKEN
+### EXPECTED: 401 Unauthorized
+### ==========================================
+
+PATCH {{baseUrl}}/events/{{event101}}
+Authorization: Bearer invalid-token
+Content-Type: application/json
+
+{
+  "title": "Invalid Token Test"
+}

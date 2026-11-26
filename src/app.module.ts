@@ -23,6 +23,7 @@ import { UsersModule } from './users/users.module.js';
       imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+       envFilePath: '.env',
     }),
     EventsModule,
     UsersModule,
